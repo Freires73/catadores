@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load filters %}
+
+{% block 'body' %}
+
+<div class="container">
+    {% if messages %}
+        <br>
+        {% for message in messages  %}
+        <div class="alert {{messag.tags}}">{{message}}</div>
+        {% endfor %}
+    {% endif %}
+    <form action="{% url 'add_produto' %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+        <br>
+        <label>Imagens:</label>
+        <Input class="form-control" type="file" name="imagens" multiple>
+        <br>
+        <label>Nome:</label>
+        <Input class="form-control" type="text" name="nome">
+        <br>
+        <label>Selecione a categoria do produto</label>
+        <select class="form-control" name="categoria">
+            {% for categoria in categorias %}
+                <option value="{{categoria.id}}">{{categoria.titulo}}</option>
+            {% endfor %}  
+        </select>
+        <br>
+        <label>Estoque inicial:</label>
+        <Input class="form-control" type="number" name="quantidade">
+        <br>
+        <label>Preço de Compra:</label>
+        <Input class="form-control" type="number" name="preco_compra">
+        <br>
+        <label>Preço de Venda:</label>
+        <Input class="form-control" type="number" name="preco_venda">
+        <br>
+        <Input class="btn btn-success" type="submit" value="Enviar">
+    </form>
+    <hr style="background-color:  gray;">
+
+    <div class="listar_produtos">
+            
+        <div class="row">
+            {% for produto in produtos %}
+                <div class="col-md">
+                    <div style="background-color: #0f0f0f; width:18rem" class="card";>
+                        {% if produto|get_first_image %}
+                            <img width="100%" class="card-img-top" src="{{produto|get_first_image}}">
+                        {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{produto.nome}} </h5>
+                                <span class="badge badge-info">{{produto.categoria}}</span>
+                                <br>
+                                <a href="#" class="btn btn-primary">Acessar</a>
+                            </div>
+                    </div>                     
+                    <br>
+                </div>
+                <br>  
+            {% endfor %}
+            
+         </div>
+    </div>
+</div>
+
+{% endblock %}
