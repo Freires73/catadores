@@ -1,15 +1,3 @@
-from django.shortcuts import render
-from .models import Categoria, Produto, Imagem
-from django.http import HttpResponse
-from PIL import Image, ImageDraw
-from datetime import date
-from io import BytesIO
-from django.core.files.uploadedfile import InMemoryUploadedFile
-import sys
-from django.shortcuts import redirect
-from django.urls import reverse
-from django.contrib import messages
-from rolepermissions.decorators import has_permission_decorator
 
 @has_permission_decorator('cadastrar_produtos ')
 def add_produto(request):
